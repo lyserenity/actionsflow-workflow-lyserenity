@@ -6,7 +6,7 @@ jobs:
     name: Make a HTTP Request
     runs-on: ubuntu-latest
     steps:
-      - name: Make a HTTP Request
+      - name: Add a new card to Trello Refile List
         uses: actionsflow/axios@v1
         with:
           url: curl https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
