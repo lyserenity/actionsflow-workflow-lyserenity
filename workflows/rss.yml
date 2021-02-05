@@ -1,17 +1,19 @@
 on:
   rss:
-    url: https://hnrss.org/newest?points=300&count=3
+    url: http://weekly.pychina.org/feeds/all.atom.xml
 jobs:
-  print:
-    name: Print
+  request:
+    name: Make a HTTP Request
     runs-on: ubuntu-latest
     steps:
-      - name: Print Outputs
-        env:
-          title: ${{on.rss.outputs.title}}
-          contentSnippet: ${{on.rss.outputs.contentSnippet}}
-          link: ${{on.rss.outputs.link}}
-        run: |
-          echo title: $title
-          echo contentSnippet: $contentSnippet
-          echo link: $link
+      - name: Make a HTTP Request
+        uses: actionsflow/axios@v1
+        with:
+          url: curl https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
+          method: POST
+          body: |
+            {
+              "idList":"${{ secrets.trello_refile_list_id }}",
+              "name": "${{ on.rss.outputs.title }}",
+              "desc":"${{ on.rss.outputs.link }}\n<<<${{ on.rss.outputs.content }}>>>"
+            }
