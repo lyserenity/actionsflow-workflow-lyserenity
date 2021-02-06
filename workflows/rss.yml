@@ -11,7 +11,7 @@ jobs:
       - name: Add a new card to Trello Refile List
         uses: actionsflow/axios@v1
         with:
-          url: curl https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
+          url: https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
           method: POST
           body: |
             {
