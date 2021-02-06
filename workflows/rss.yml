@@ -1,6 +1,8 @@
 on:
   rss:
     url: http://weekly.pychina.org/feeds/all.atom.xml
+    config:
+      every: "0 8 * * *"
 jobs:
   request:
     name: Make a HTTP Request
