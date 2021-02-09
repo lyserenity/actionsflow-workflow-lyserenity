@@ -1,6 +1,8 @@
 on:
   rss:
-    url: http://weekly.pychina.org/feeds/all.atom.xml
+    url:
+      - http://weekly.pychina.org/feeds/all.atom.xml
+      - https://github.com/lyserenity/actionsflow-workflow-lyserenity/commits/main.atom
     config:
       every: "0 8 * * *"
 jobs:
@@ -16,6 +18,6 @@ jobs:
           body: |
             {
               "idList":"${{ secrets.trello_refile_list_id }}",
-              "name": "${{ on.rss.outputs.title }}",
+              "name": "actionflow | ${{ on.rss.outputs.title }}",
               "desc":"${{ on.rss.outputs.link }}\n<<<${{ on.rss.outputs.content }}>>>"
             }
