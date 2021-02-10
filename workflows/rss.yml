@@ -2,7 +2,7 @@ on:
   rss:
     url:
       - http://weekly.pychina.org/feeds/all.atom.xml
-      - https://github.com/lyserenity/actionsflow-workflow-lyserenity/commits/main.atom
+      - ${{secrets.test_url}}
     config:
       every: "0 8 * * *"
 jobs:
@@ -13,10 +13,12 @@ jobs:
       - name: Add a new card to Trello Refile List
         uses: actionsflow/axios@v1
         with:
-          url: https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
+          url: https://api.trello.com/1/cards
           method: POST
           params: |
             {
+              "key" : "${{secrets.trello_key}}",
+              "token" : "${{secrets.trello_token}}",
               "idList":"${{ secrets.trello_refile_list_id }}",
               "name": "actionflow | ${{ on.rss.outputs.title }}",
               "desc":"${{ on.rss.outputs.link }}\n<<<${{ on.rss.outputs.content }}>>>",
