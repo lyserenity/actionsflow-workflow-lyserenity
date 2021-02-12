@@ -2,7 +2,7 @@ on:
   rss:
     url:
       - http://weekly.pychina.org/feeds/all.atom.xml
-      - ${{secrets.test_url}}
+      - http://www.cultofmac.com/feed/
     config:
       every: "0 8 * * *"
 jobs:
