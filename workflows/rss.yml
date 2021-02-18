@@ -13,12 +13,14 @@ jobs:
       - name: Add a new card to Trello Refile List
         uses: actionsflow/axios@v1
         with:
-          url: https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
+          url: https://app.asana.com/api/1.0/tasks
           method: POST
-          params: |
+          headers: '{ "Content-Type": "application/json", "Authorization": ${{ asana_token }} }'
+          data: |
             {
               "idList":"${{ secrets.trello_refile_list_id }}",
               "name": "actionflow | ${{ on.rss.outputs.title }}",
-              "desc":"${{ on.rss.outputs.link }}\n<<<${{ on.rss.outputs.content }}>>>",
-              "pos": "top"
+              "html_notes": "<body>${{ on.rss.outputs.content }}\n\n<a href='${{ on.rss.outputs.link }}'>Trello Link</a></body>",
+              "projects": ["${{ asana_project }}"],
+              "workspace": "${{ asana_workspace }}"
             }
