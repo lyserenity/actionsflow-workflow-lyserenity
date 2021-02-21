@@ -1,0 +1,22 @@
+on:
+  rss:
+    url: https://hnrss.org/newest?points=300
+    config:
+      debug: true
+jobs:
+  request:
+    name: Make a HTTP Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add a new card to Trello Refile List
+        uses: actionsflow/axios@v1
+        with:
+          url: https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
+          method: POST
+          params: |
+            {
+              "idList":"${{ secrets.trello_refile_list_id }}",
+              "name": "actionflow | ${{ on.rss.outputs.title }}",
+              "desc":"${{ on.rss.outputs.link }}\n${{ on.rss.outputs.contentSnippet }}",
+              "pos": "top"
+            }
