@@ -19,7 +19,6 @@ jobs:
           headers: '{ "Content-Type": "application/json", "Authorization": ${{ asana_token }} }'
           data: |
             {
-              "idList":"${{ secrets.trello_refile_list_id }}",
               "name": "actionflow | ${{ on.rss.outputs.title }}",
               "html_notes": "<body>${{ on.rss.outputs.content }}\n\n<a href='${{ on.rss.outputs.link }}'>Trello Link</a></body>",
               "projects": ["${{ asana_project }}"],
