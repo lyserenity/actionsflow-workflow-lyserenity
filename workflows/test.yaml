@@ -18,5 +18,6 @@ jobs:
               "idList":"${{ secrets.trello_refile_list_id }}",
               "name": "actionflow | ${{ on.rss.outputs.title }}",
               "urlSource" : "${{on.rss.outputs.link}}",
+              "desc" : "<<<${{on.rss.outputs.contentSnippet}}>>>",
               "pos": "top"
             }
