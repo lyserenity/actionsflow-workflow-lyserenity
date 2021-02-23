@@ -2,16 +2,16 @@ on:
   rss:
     url:
       - http://weekly.pychina.org/feeds/all.atom.xml
-      - https://github.com/lyserenity/actionsflow-workflow-lyserenity/commits/main.atom
       - http://applefans.today/feed
     config:
+      - debug: true
       - cron: "0 8 * * *"
 jobs:
   request:
     name: Make a HTTP Request
     runs-on: ubuntu-latest
     steps:
-      - name: Add a new card to Trello Refile List
+      - name: Add a new card to Asana
         uses: actionsflow/axios@v1
         with:
           url: https://app.asana.com/api/1.0/tasks

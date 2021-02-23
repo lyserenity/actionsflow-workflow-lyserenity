@@ -1,8 +1,10 @@
 on:
   rss:
-    url: https://hnrss.org/newest?points=300
+    url: 
+      - https://www.youtube.com/feeds/videos.xml?channel_id=UCSs4A6HYKmHA2MG_0z-F0xw
     config:
       debug: true
+
 jobs:
   request:
     name: Make a HTTP Request
@@ -16,8 +18,8 @@ jobs:
           params: |
             {
               "idList":"${{ secrets.trello_refile_list_id }}",
-              "name": "actionflow | ${{ on.rss.outputs.title }}",
+              "name": "${{ on.rss.outputs.title }}",
               "urlSource" : "${{on.rss.outputs.link}}",
-              "desc" : "<<<${{on.rss.outputs.contentSnippet}}>>>",
+              "desc" : "<<<${{ on.rss.outputs.title }}>>>%0A<<<${{on.rss.outputs.contentSnippet}}>>>",
               "pos": "top"
             }
