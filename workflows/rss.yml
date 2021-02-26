@@ -16,7 +16,7 @@ jobs:
         with:
           url: https://app.asana.com/api/1.0/tasks
           method: POST
-          headers: '{ "Content-Type": "application/json", "Authorization": ${{ asana_token }} }'
+          headers: '{ "Content-Type": "application/json", "Authorization": "${{ ASANA_TOKEN }}" }'
           data: |
             {
               "name": "actionflow | ${{ on.rss.outputs.title }}",
