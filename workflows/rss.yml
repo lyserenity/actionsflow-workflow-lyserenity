@@ -15,12 +15,13 @@ jobs:
         uses: actionsflow/axios@v1
         with:
           url: https://app.asana.com/api/1.0/tasks
-          method: POST
-          headers: '{ "Content-Type": "application/json", "Authorization": "${{ ASANA_TOKEN }}" }'
+          method: 'POST'
+          headers: '{ "Content-Type": "application/json" }'
+          bearer-token: ${{ secrets.ASANA_TOKEN }}
           data: |
             {
               "name": "actionflow | ${{ on.rss.outputs.title }}",
               "html_notes": "<body>${{ on.rss.outputs.content }}\n\n<a href='${{ on.rss.outputs.link }}'>Trello Link</a></body>",
-              "projects": ["${{ asana_project }}"],
-              "workspace": "${{ asana_workspace }}"
+              "projects": ["${{ secrets.asana_project }}"],
+              "workspace": "${{ secrets.asana_workspace }}"
             }
