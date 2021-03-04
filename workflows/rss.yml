@@ -16,8 +16,9 @@ jobs:
     steps:
       - name: Print Outputs
         env:
-          # title: ${{ on.poll.outputs.data.name }}
-          rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
+          title: ${{ on.poll.outputs.name }}
+          task_id: ${{ on.poll.outputs.gid }}
+          # rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
         run: |
-          echo "ok"
-          echo "rawBody: $rawBody"
+          echo "$title"
+          echo "task id: $task_id"
