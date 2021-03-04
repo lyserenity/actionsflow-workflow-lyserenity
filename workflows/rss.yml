@@ -2,6 +2,7 @@ on:
   poll:
     url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now
     deduplicationKey: data.gid
+    shouldIncludeBody: true
     requestConfig:
       method: GET
       headers:
@@ -14,8 +15,8 @@ jobs:
     steps:
       - name: Print Outputs
         env:
-          title: ${{ on.poll.outputs.data.name }}
-          body: ${{ on.poll.outputs.data.gid }}
+          # title: ${{ on.poll.outputs.data.name }}
+          # body: ${{ on.poll.outputs.data.gid }}
+          rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
         run: |
-          echo "title: $title"
-          echo "body: $body"
+          rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
