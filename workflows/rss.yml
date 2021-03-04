@@ -9,16 +9,46 @@ on:
       headers:
         Authorization: ${{ secrets.ASANA_TOKEN }}
 
+# jobs:
+#   print:
+#     name: Print
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Print Outputs
+#         env:
+#           title: ${{ on.poll.outputs.name }}
+#           task_id: ${{ on.poll.outputs.gid }}
+#           # rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
+#         run: |
+#           echo "$title"
+#           echo "task id: $task_id"
+
 jobs:
-  print:
-    name: Print
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Outputs
-        env:
-          title: ${{ on.poll.outputs.name }}
-          task_id: ${{ on.poll.outputs.gid }}
-          # rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
-        run: |
-          echo "$title"
-          echo "task id: $task_id"
+    asana-task-detail:
+        name: 'Get Task Detail'
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Call API'
+              uses: actionsflow/axios@v1
+              id: api
+              with:
+                # The target URL
+                # Required: true if custom-config is not set
+                url: https://app.asana.com/api/1.0/tasks/${{ on.poll.outputs.gid }}
+                
+                # The request method, basically it's one of GET|POST|PUT|PATCH
+                # Default is GET 
+                method: 'GET'
+
+                # Headers can be passed through json object string 
+                # support escape string, use <<<${{env.TEST}}>>>
+                headers: '{ "Authorization": "${{ secrets.ASANA_TOKEN }}" }'
+
+                # Content-Type Header value, if data is json string, then content-type default value is application/json
+                content-type: application/json
+
+                # Params can be passed through json object string 
+                # support escape string, use <<<${{env.TEST}}>>>
+                params: '{ "param1": "value", "param2": "value2" }'
+              - run: echo ${{ steps.api.outputs.status }}
+              - run: echo ${{ on.poll.outputs.name }}
