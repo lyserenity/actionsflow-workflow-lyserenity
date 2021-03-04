@@ -47,5 +47,9 @@ jobs:
                 # Content-Type Header value, if data is json string, then content-type default value is application/json
                 content-type: application/json
 
-            - run: echo ${{ steps.api.outputs.status }}
-            - run: echo ${{ on.poll.outputs.name }}
+            - name: 'Get Due_At'
+              if: steps.api.outputs.data.due_at !== null;
+              run: |
+                echo ${{ steps.api.outputs.status }}
+                echo ${{ steps.api.outputs.data.due_at }}
+                echo ${{ steps.api.outputs.data.gid }}
