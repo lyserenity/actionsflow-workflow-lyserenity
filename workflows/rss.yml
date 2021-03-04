@@ -19,4 +19,4 @@ jobs:
           # body: ${{ on.poll.outputs.data.gid }}
           rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
         run: |
-          rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
+          echo "rawBody: $rawBody"
