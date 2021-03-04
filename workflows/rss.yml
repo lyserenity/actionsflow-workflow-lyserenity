@@ -16,7 +16,6 @@ jobs:
       - name: Print Outputs
         env:
           # title: ${{ on.poll.outputs.data.name }}
-          # body: ${{ on.poll.outputs.data.gid }}
-          rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
+          body: ${{ on.poll.outputs.data }}
         run: |
-          echo "rawBody: $rawBody"
+          echo "ok"
