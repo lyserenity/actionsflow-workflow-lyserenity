@@ -48,7 +48,7 @@ jobs:
                 content-type: application/json
 
             - name: 'Get Due_At'
-              if: steps.api.outputs.data.due_at !== null;
+              if: steps.api.outputs.data.due_at !== null
               run: |
                 echo ${{ steps.api.outputs.status }}
                 echo ${{ steps.api.outputs.data.due_at }}
