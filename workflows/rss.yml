@@ -1,7 +1,7 @@
 on:
   poll:
     url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now
-    deduplicationKey: gid
+    deduplicationKey: data.gid
     requestConfig:
       method: GET
       headers:
