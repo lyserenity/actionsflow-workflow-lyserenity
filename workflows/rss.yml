@@ -1,7 +1,8 @@
 on:
   poll:
     url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now
-    shouldIncludeBody: true
+    itemsPath: data
+    shouldIncludeRawBody: true
     requestConfig:
       method: GET
       headers:
@@ -15,6 +16,6 @@ jobs:
       - name: Print Outputs
         env:
           # title: ${{ on.poll.outputs.data.name }}
-          body: ${{ on.poll.outputs.data }}
+          rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
         run: |
           echo "ok"
