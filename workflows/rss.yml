@@ -47,8 +47,5 @@ jobs:
                 # Content-Type Header value, if data is json string, then content-type default value is application/json
                 content-type: application/json
 
-                # Params can be passed through json object string 
-                # support escape string, use <<<${{env.TEST}}>>>
-                params: '{ "param1": "value", "param2": "value2" }'
-              - run: echo ${{ steps.api.outputs.status }}
-              - run: echo ${{ on.poll.outputs.name }}
+            - run: echo ${{ steps.api.outputs.status }}
+            - run: echo ${{ on.poll.outputs.name }}
