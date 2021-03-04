@@ -1,25 +1,21 @@
 on:
-  rss:
-    url:
-      - http://weekly.pychina.org/feeds/all.atom.xml
-      - http://applefans.today/feed
-    config:
-      - debug: true
-      - cron: "0 8 * * *"
+  poll:
+    url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now
+    deduplicationKey: gid
+    requestConfig:
+      method: GET
+      headers:
+        Authorization: ${{ secrets.ASANA_TOKEN }}
+
 jobs:
-  request:
-    name: Make a HTTP Request
+  print:
+    name: Print
     runs-on: ubuntu-latest
     steps:
-      - name: Add a new card to Asana
-        uses: actionsflow/axios@v1
-        with:
-          url: https://app.asana.com/api/1.0/tasks
-          method: 'POST'
-          headers: '{ "Content-Type": "application/json", "Authorization": "${{ secrets.ASANA_TOKEN }}" }'
-          data: |
-            {
-              "name": "actionflow | ${{ on.rss.outputs.title }}",
-              "projects": ["${{ secrets.asana_project }}"],
-              "workspace": "${{ secrets.asana_workspace }}"
-            }
+      - name: Print Outputs
+        env:
+          title: ${{ on.poll.outputs.data.name }}
+          body: ${{ on.poll.outputs.data.gid }}
+        run: |
+          echo "title: $title"
+          echo "body: $body"
