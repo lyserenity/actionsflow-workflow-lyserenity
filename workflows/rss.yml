@@ -19,3 +19,4 @@ jobs:
           rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
         run: |
           echo "ok"
+          echo "rawBody: $rawBody"
