@@ -55,6 +55,5 @@ jobs:
                 # json: ${{toJSON(steps.api.outputs.data)}}
                 json: ${{ steps.api.outputs.data }}
             - run: |
-                echo ${{ steps.result.outputs.status }}
                 echo gid: ${{ steps.result.outputs.data }}
                 echo gid2: ${{ steps.result.outputs.data.gid }}
