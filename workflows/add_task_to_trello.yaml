@@ -2,6 +2,7 @@ on:
   rss:
     url: 
       - https://www.youtube.com/feeds/videos.xml?channel_id=UCSs4A6HYKmHA2MG_0z-F0xw
+      - http://weekly.pychina.org/feeds/all.atom.xml
     config:
       debug: true
 
