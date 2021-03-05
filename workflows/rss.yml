@@ -49,8 +49,11 @@ jobs:
 
             - name: 'Get Due_At'
               # if: steps.api.outputs.data.due_at != null
+              env:
+                json: ${{toJSON(steps.api.outputs)}}
               run: |
                 echo ${{ steps.api.outputs.status }}
                 echo ${{ steps.api.outputs.data.data.due_at }}
                 echo ${{ steps.api.outputs.data.data.gid }}
                 echo ${{ steps.api.outputs.data }}
+                echo json: $json
