@@ -50,8 +50,8 @@ jobs:
             - name: 'Get Due_At'
               id: result
               # if: steps.api.outputs.data.due_at != null
-              env:
-                title: ${{ toJSON(steps.api.outputs.data) }}
+              # env:
+              #   title: ${{ toJSON(steps.api.outputs.data) }}
               run: |
-                echo gid: $title
-                echo json: ${{fromJSON(steps.api.outputs.data).data.gid}}
+                echo gid: ${{fromJSON(steps.api.outputs.data).data.gid}}
+                echo due: ${{fromJSON(steps.api.outputs.data).data.due_at}}
