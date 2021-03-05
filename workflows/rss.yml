@@ -48,13 +48,13 @@ jobs:
                 content-type: application/json
 
             - name: 'Get Due_At'
+              id: result
               # if: steps.api.outputs.data.due_at != null
-              env:
-                json: ${{toJSON(steps.api.outputs.data)}}
-                json2: ${{toJSON(steps.api.outputs.data.data)}}
-              run: |
-                echo ${{ steps.api.outputs.status }}
-                echo $json.data.data.gid
-                echo json: $json
-                echo json1: ${{ steps.api.outputs.data }}
-                echo json2: $json2
+              uses: gr2m/get-json-paths-action@v1.x
+              with:
+                # json: ${{toJSON(steps.api.outputs.data)}}
+                json: ${{ steps.api.outputs.data }}
+            - run: |
+                echo ${{ steps.result.outputs.status }}
+                echo gid: ${{ steps.result.outputs.data }}
+                echo gid2: ${{ steps.result.outputs.data.gid }}
