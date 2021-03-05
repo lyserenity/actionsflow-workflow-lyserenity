@@ -53,7 +53,6 @@ jobs:
                 json: ${{toJSON(steps.api.outputs)}}
               run: |
                 echo ${{ steps.api.outputs.status }}
-                echo ${{ steps.api.outputs.data.data.due_at }}
-                echo ${{ steps.api.outputs.data.data.gid }}
-                echo ${{ steps.api.outputs.data }}
+                echo ${{ json.data.data.due_at }}
+                echo ${{ json.data.data.gid }}
                 echo json: $json
