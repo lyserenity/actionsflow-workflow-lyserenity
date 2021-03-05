@@ -50,10 +50,11 @@ jobs:
             - name: 'Get Due_At'
               # if: steps.api.outputs.data.due_at != null
               env:
-                json: ${{toJSON(steps.api.outputs)}}
+                json: ${{toJSON(steps.api.outputs.data)}}
                 json2: ${{toJSON(steps.api.outputs.data.data)}}
               run: |
                 echo ${{ steps.api.outputs.status }}
                 echo $json.data.data.gid
                 echo json: $json
-                echo json: $json2
+                echo json1: ${{ steps.api.outputs.data }}
+                echo json2: $json2
