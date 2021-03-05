@@ -47,13 +47,14 @@ jobs:
                 # Content-Type Header value, if data is json string, then content-type default value is application/json
                 content-type: application/json
 
+            - run: echo DATA: ${{ steps.api.outputs.data }}
             - name: 'Get Due_At'
               id: result
               # if: steps.api.outputs.data.due_at != null
               uses: gr2m/get-json-paths-action@v1.x
               with:
-                # json: ${{toJSON(steps.api.outputs.data)}}
-                json: ${{ steps.api.outputs.data }}
+                json: ${{toJSON(steps.api.outputs.data)}}
+                # json: ${{ steps.api.outputs.data }}
             - run: |
                 echo gid: ${{ steps.result.outputs.data }}
                 echo gid2: ${{ steps.result.outputs.data.gid }}
