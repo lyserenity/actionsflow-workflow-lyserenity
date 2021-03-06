@@ -41,8 +41,12 @@ jobs:
                 method: 'POST'
 
                 # Content-Type Header value, if data is json string, then content-type default value is application/json
-                content-type: application/json
-                data: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
-            - run: echo ${{ steps.integromat.outputs.status }}
-            - run: echo ${{ steps.integromat.outputs.data }}
-            - run: echo ${{ on.poll.outputs.status }}
+                headers: '{ "content-type": "application/json" }'
+                # content-type: application/json
+                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
+            - run: | 
+                echo ${{ on.poll.outputs.gid }}
+            - run: | 
+                echo ${{ on.poll.outputs.gid }}
+            - run: | 
+                echo ${{ on.poll.outputs.status }}
