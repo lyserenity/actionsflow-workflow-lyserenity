@@ -1,0 +1,20 @@
+on:
+  script:
+    path: ./workflows/script.js
+    deduplicationKey: gid
+jobs:
+  print:
+    name: Print
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Outputs
+        env:
+          title: ${{on.script.outputs.name}}
+          gid: ${{on.script.outputs.gid}}
+          mod: ${{on.script.outputs.modified_at}}
+          uuid: ${{on.script.outputs.uuid}}
+        run: |
+          echo title: $title
+          echo gid: $gid
+          echo mod: $mod
+          echo uuid: $uuid
