@@ -48,4 +48,4 @@ jobs:
             - run: | 
                 echo ${{ on.poll.outputs.uuid }}
             - run: | 
-                echo ${{ on.poll.outputs.status }}
+                echo ${{ on.poll.outputs.name }}
