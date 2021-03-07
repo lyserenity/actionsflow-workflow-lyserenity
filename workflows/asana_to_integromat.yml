@@ -1,13 +1,20 @@
 on:
   poll:
     url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now&opt_fields=name,due_at,modified_at
-    itemsPath: data
-    deduplicationKey: gid
-    # shouldIncludeRawBody: true
     requestConfig:
       method: GET
       headers:
         Authorization: ${{ secrets.ASANA_TOKEN }}
+    itemsPath: data
+    config:
+      format: |
+        return {
+          gid: item.gid
+          due_at: item.due_at
+          name: item.name,
+          uuid: String(item.gid) + item.modified_at
+        }
+    deduplicationKey: gid
 
 # jobs:
 #   print:
@@ -47,6 +54,6 @@ jobs:
             - run: | 
                 echo ${{ on.poll.outputs.gid }}
             - run: | 
-                echo ${{ on.poll.outputs.gid }}
+                echo ${{ on.poll.outputs.uuid }}
             - run: | 
                 echo ${{ on.poll.outputs.status }}
