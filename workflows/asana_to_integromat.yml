@@ -14,7 +14,7 @@ on:
           name: item.name,
           uuid: String(item.gid) + item.modified_at
         }
-    deduplicationKey: gid
+    deduplicationKey: uuid
 
 # jobs:
 #   print:
@@ -35,22 +35,14 @@ jobs:
         name: 'Make a HTTP Request'
         runs-on: ubuntu-latest
         steps:
-            - name: 'To Integromat'
-              uses: actionsflow/axios@v1
-              id: integromat
-              with:
-                # The target URL
-                # Required: true if custom-config is not set
-                url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
-                
-                # The request method, basically it's one of GET|POST|PUT|PATCH
-                # Default is GET 
-                method: 'POST'
-
-                # Content-Type Header value, if data is json string, then content-type default value is application/json
-                headers: '{ "content-type": "application/json" }'
-                # content-type: application/json
-                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
+            # - name: 'To Integromat'
+            #   uses: actionsflow/axios@v1
+            #   id: integromat
+            #   with:
+            #     url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
+            #     method: 'POST'
+            #     headers: '{ "content-type": "application/json" }'
+            #     body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
             - run: | 
                 echo ${{ on.poll.outputs.gid }}
             - run: | 
