@@ -9,8 +9,8 @@ on:
     config:
       format: |
         return {
-          gid: item.gid
-          due_at: item.due_at
+          gid: item.gid,
+          due_at: item.due_at,
           name: item.name,
           uuid: String(item.gid) + item.modified_at
         }
