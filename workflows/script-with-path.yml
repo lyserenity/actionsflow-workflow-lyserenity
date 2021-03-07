@@ -1,9 +1,9 @@
 on:
   script:
     run: |
-      const result = await helpers.axios.get("https://jsonplaceholder.typicode.com/posts")
+      const result = await helpers.axios.get("https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now&opt_fields=name,due_at,modified_at", {headers: {"Authorization": "<<<${{ secrets.ASANA_TOKEN }}>>>"}})
       return result.data
-    deduplicationKey: id
+    deduplicationKey: gid
 jobs:
   print:
     name: Print
@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Print Outputs
         env:
-          title: ${{on.script.outputs.title}}
+          title: ${{on.script.outputs.name}}
+          gid: ${{on.script.outputs.gid}}
+          mod: ${{on.script.outputs.modified_at}}
         run: |
           echo title: $title
+          echo gid: $gid
+          echo mod: $mod
