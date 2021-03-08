@@ -35,17 +35,17 @@ jobs:
         name: 'Make a HTTP Request'
         runs-on: ubuntu-latest
         steps:
-            # - name: 'To Integromat'
-            #   uses: actionsflow/axios@v1
-            #   id: integromat
-            #   with:
-            #     url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
-            #     method: 'POST'
-            #     headers: '{ "content-type": "application/json" }'
-            #     body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
+            - name: 'To Integromat'
+              uses: actionsflow/axios@v1
+              id: integromat
+              with:
+                url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
+                method: 'POST'
+                headers: '{ "content-type": "application/json" }'
+                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
             - run: | 
-                echo ${{ on.poll.outputs.gid }}
-            - run: | 
-                echo ${{ on.poll.outputs.uuid }}
-            - run: | 
-                echo ${{ on.poll.outputs.name }}
+                echo "${{ on.poll.outputs.name }}: ${{ on.poll.outputs.uuid }}"
+            # - run: | 
+            #     echo ${{ on.poll.outputs.uuid }}
+            # - run: | 
+            #     echo ${{ on.poll.outputs.name }}
