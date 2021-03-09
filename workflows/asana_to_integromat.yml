@@ -8,11 +8,12 @@ on:
     itemsPath: data
     config:
       format: |
+        var is_due = (item.due_at === null) ? item.due_on : item.due_at
         return {
           gid: item.gid,
-          due: (item.due_at === null) ? item.due_on : item.due_at,
+          due: is_due,
           name: item.name,
-          uuid: String(item.gid) + ':' + String(this.due)
+          uuid: String(item.gid) + ':' + String(is_due)
         }
     deduplicationKey: uuid
 
@@ -47,5 +48,5 @@ jobs:
                 echo "${{ on.poll.outputs.name }}: ${{ on.poll.outputs.uuid }}"
             - run: | 
                 echo ${{ on.poll.outputs.due }}
-            # - run: | 
-            #     echo ${{ on.poll.outputs.name }}
+            - run: | 
+                echo ${{ on.poll.outputs }}
