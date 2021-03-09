@@ -1,6 +1,6 @@
 on:
   poll:
-    url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now&opt_fields=name,due_at,modified_at
+    url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now&opt_fields=name,due_at,modified_at,due_on
     requestConfig:
       method: GET
       headers:
@@ -10,7 +10,7 @@ on:
       format: |
         return {
           gid: item.gid,
-          due_at: item.due_at,
+          due: (item.due_at === null) ? item.due_on : item.due_at,
           name: item.name,
           uuid: String(item.gid) + ':' + String(item.due_at)
         }
@@ -35,17 +35,17 @@ jobs:
         name: 'Make a HTTP Request'
         runs-on: ubuntu-latest
         steps:
-            - name: 'To Integromat'
-              uses: actionsflow/axios@v1
-              id: integromat
-              with:
-                url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
-                method: 'POST'
-                headers: '{ "content-type": "application/json" }'
-                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due_at }}" }'
+            # - name: 'To Integromat'
+            #   uses: actionsflow/axios@v1
+            #   id: integromat
+            #   with:
+            #     url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
+            #     method: 'POST'
+            #     headers: '{ "content-type": "application/json" }'
+            #     body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due }}" }'
             - run: | 
                 echo "${{ on.poll.outputs.name }}: ${{ on.poll.outputs.uuid }}"
-            # - run: | 
-            #     echo ${{ on.poll.outputs.uuid }}
+            - run: | 
+                echo ${{ on.poll.outputs.due }}
             # - run: | 
             #     echo ${{ on.poll.outputs.name }}
