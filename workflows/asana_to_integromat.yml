@@ -18,36 +18,23 @@ on:
         }
     deduplicationKey: uuid
 
-# jobs:
-#   print:
-#     name: Print
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Print Outputs
-#         env:
-#           title: ${{ on.poll.outputs.name }}
-#           task_id: ${{ on.poll.outputs.gid }}
-#           # rawBody: ${{ toJSON(on.poll.outputs.raw__body) }}
-#         run: |
-#           echo "$title"
-#           echo "task id: $task_id"
 
 jobs:
     asana-task-detail:
         name: 'Make a HTTP Request'
         runs-on: ubuntu-latest
         steps:
-            # - name: 'To Integromat'
-            #   uses: actionsflow/axios@v1
-            #   id: integromat
-            #   with:
-            #     url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
-            #     method: 'POST'
-            #     headers: '{ "content-type": "application/json" }'
-            #     body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due }}" }'
+            - name: 'To Integromat'
+              uses: actionsflow/axios@v1
+              id: integromat
+              with:
+                url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
+                method: 'POST'
+                headers: '{ "content-type": "application/json" }'
+                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due }}" }'
             - run: | 
                 echo "UUID: ${{ on.poll.outputs.uuid }}"
             - run: | 
-                echo "Due: ${{ on.poll.outputs.due }}"
-            - run: | 
-                echo "NAME: ${{ on.poll.outputs.uuid }}"
+                echo "Due: ${{ on.poll.outputs.name }}: ${{ on.poll.outputs.due }}"
+            # - run: | 
+            #     echo "NAME: ${{ on.poll.outputs.name }}"
