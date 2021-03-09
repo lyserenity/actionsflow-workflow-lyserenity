@@ -12,7 +12,7 @@ on:
           gid: item.gid,
           due: (item.due_at === null) ? item.due_on : item.due_at,
           name: item.name,
-          uuid: String(item.gid) + ':' + String(item.due_at)
+          uuid: String(item.gid) + ':' + String(this.due)
         }
     deduplicationKey: uuid
 
