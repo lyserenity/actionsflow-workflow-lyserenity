@@ -32,7 +32,7 @@ jobs:
                 url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
                 method: 'POST'
                 headers: '{ "content-type": "application/json" }'
-                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due }}", "due": "${{ on.poll.outputs.link }}" }'
+                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due }}", "link": "${{ on.poll.outputs.link }}" }'
             - run: | 
                 echo "UUID: ${{ on.poll.outputs.uuid }}"
             - run: | 
