@@ -1,8 +1,8 @@
 on:
   rss:
-    url: 
-      - https://www.youtube.com/feeds/videos.xml?channel_id=UCSs4A6HYKmHA2MG_0z-F0xw
+    url:
       - http://weekly.pychina.org/feeds/all.atom.xml
+#      - https://www.youtube.com/feeds/videos.xml?channel_id=UCSs4A6HYKmHA2MG_0z-F0xw
     config:
       debug: true
 
