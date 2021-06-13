@@ -16,10 +16,10 @@ jobs:
               uses: actionsflow/axios@v1
               id: new_todo_todoist
               with:
-                url: "https://api.todoist.com/rest/v1/tasks"
-                method: 'POST'
+                url: https://api.todoist.com/rest/v1/tasks
+                method: POST
                 headers: '{ "content-type": "application/json", "Authorization": "${{secrets.BEARER_TODOIST_TOKEN}}" }'
-                data: '{ "content": "[${{on.youtube.outputs.title}}](${{on.youtube.outputs.link}})",  "description": "${{on.youtube.outputs.description}}", "project_id": "2267113664", "section_id": "50833044" }'
+                data: '{ "content": "[${{on.youtube.outputs.title}}](${{on.youtube.outputs.link}})", "project_id": "2267113664", "section_id": "50833044" }'
             - run: | 
                 echo "${{on.youtube.outputs.title}}: ${{on.youtube.outputs.link}}"
             - run: | 
