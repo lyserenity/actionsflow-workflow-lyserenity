@@ -12,16 +12,18 @@ jobs:
         name: 'Make a HTTP Request'
         runs-on: ubuntu-latest
         steps:
+            - run: | 
+                echo "${{on.youtube.outputs.title}}: ${{on.youtube.outputs.link}}"
+            - run: | 
+                echo "${{on.youtube.outputs.description}}"
             - name: 'To Todoist'
               uses: actionsflow/axios@v1
               id: new_todo_todoist
               with:
                 url: https://api.todoist.com/rest/v1/tasks
-                method: POST
+                method: 'POST'
+                headers: '{ "Authorization": "${{ secrets.BEARER_TODOIST_TOKEN }}" }'
                 content-type: application/json
-                bearer-token: ${{ secrets.BEARER_TODOIST_TOKEN }}
-                data: '{ "content": "[<<<${{on.youtube.outputs.title}}>>>](${{on.youtube.outputs.link}})", "project_id": 2267113664, "section_id": 50833044 }'
-            - run: | 
-                echo "${{on.youtube.outputs.title}}: ${{on.youtube.outputs.link}}"
-            - run: | 
-                echo "${{on.youtube.outputs.description}}"
+                # bearer-token: ${{ secrets.BEARER_TODOIST_TOKEN }}
+                data: '{ "content": "[${{on.youtube.outputs.title}}](${{on.youtube.outputs.link}})", "project_id": 2267113664, "section_id": 50833044 }'
+                is_debug: true
