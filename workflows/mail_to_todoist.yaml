@@ -13,9 +13,9 @@ jobs:
         steps:
             - run: | 
                 echo "${{(on.email.outputs.subject)}}"
-            - name: 'To Todoist'
+            - name: 'Email To Todoist'
               uses: actionsflow/axios@v1
-              id: new_todo_todoist
+              id: mail_to_todoist
               with:
                 url: https://api.todoist.com/rest/v1/tasks
                 method: 'POST'
