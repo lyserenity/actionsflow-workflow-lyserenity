@@ -1,0 +1,30 @@
+on:
+  rss:
+    url:
+      - http://weekly.pychina.org/feeds/all.atom.xml
+      - https://realpython.com/atom.xml
+#      - https://www.youtube.com/feeds/videos.xml?channel_id=UCSs4A6HYKmHA2MG_0z-F0xw
+    config:
+      limit: 15
+      debug: true
+
+jobs:
+  request:
+    name: Make a HTTP Request
+    runs-on: ubuntu-latest
+    steps:
+      - run: | 
+          echo "${{on.rss.outputs.title}}: ${{on.rss.outputs.link}}"
+      - name: Add a new card to Trello Refile List
+        uses: actionsflow/axios@v1
+        with:
+          url: https://api.trello.com/1/cards?key=${{secrets.trello_key}}&token=${{secrets.trello_token}}
+          method: POST
+          params: |
+            {
+              "idList":"${{ secrets.trello_refile_list_id }}",
+              "name": "${{ on.rss.outputs.title }}",
+              "urlSource" : "${{on.rss.outputs.link}}",
+              "desc" : "<<<${{on.rss.outputs.contentSnippet}}>>>",
+              "pos": "top"
+            }

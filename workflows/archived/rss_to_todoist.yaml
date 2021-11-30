@@ -1,0 +1,25 @@
+on:
+  rss:
+    url:
+      - https://realpython.com/atom.xml
+    config:
+      limit: 15
+
+
+jobs:
+    new_todo_in_todoist:
+        name: 'Make a HTTP Request'
+        runs-on: ubuntu-latest
+        steps:
+            - run: | 
+                echo "${{on.rss.outputs.title}}: ${{on.rss.outputs.link}}"
+            - name: 'To Todoist'
+              uses: actionsflow/axios@v1
+              id: new_todo_todoist
+              with:
+                url: https://api.todoist.com/rest/v1/tasks
+                method: 'POST'
+                headers: '{ "Authorization": "<<<${{ secrets.BEARER_TODOIST_TOKEN }}>>>", "content-type": "application/json" }'
+                data: '{ "content": "<<<${{on.rss.outputs.link}}>>>", "project_id": 2267113664, "section_id": 50833044 }'
+                is_debug: true
+

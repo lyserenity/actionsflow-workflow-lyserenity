@@ -1,0 +1,41 @@
+on:
+  poll:
+    url: https://app.asana.com/api/1.0/tags/1198197485416173/tasks?completed_since=now&opt_fields=name,due_at,modified_at,due_on,permalink_url
+    requestConfig:
+      method: GET
+      headers:
+        Authorization: ${{ secrets.ASANA_TOKEN }}
+    itemsPath: data
+    config:
+      format: |
+        var is_due = (item.due_at === null) ? item.due_on : item.due_at
+        var all_null = (is_due === null) ? String(is_due) + ':' + item.modified_at : is_due 
+        return {
+          gid: item.gid,
+          due: is_due,
+          name: item.name,
+          link: item.permalink_url,
+          uuid: item.name.length + ':' + item.gid + ':' + all_null
+        }
+    deduplicationKey: uuid
+
+
+jobs:
+    asana-task-detail:
+        name: 'Make a HTTP Request'
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'To Integromat'
+              uses: actionsflow/axios@v1
+              id: integromat
+              with:
+                url: ${{ secrets.INTEGROMAT_WEBHOOK_URL }}
+                method: 'POST'
+                headers: '{ "content-type": "application/json" }'
+                body: '{ "gid": "${{ on.poll.outputs.gid }}", "name": "${{ on.poll.outputs.name }}", "due": "${{ on.poll.outputs.due }}", "link": "${{ on.poll.outputs.link }}" }'
+            - run: | 
+                echo "UUID: ${{ on.poll.outputs.uuid }}"
+            - run: | 
+                echo "Due: ${{ on.poll.outputs.name }}: ${{ on.poll.outputs.due }}"
+            - run: | 
+                echo "link: ${{ on.poll.outputs.link }}"
