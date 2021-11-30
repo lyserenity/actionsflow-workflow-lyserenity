@@ -1,0 +1,24 @@
+on:
+  email:
+    imap:
+      host: outlook.office365.com
+      user: ${{secrets.EMAIL_USER}}
+      password: ${{secrets.EMAIL_PASSWORD}}
+
+
+jobs:
+    new_todo_in_todoist:
+        name: 'Make a HTTP Request'
+        runs-on: ubuntu-latest
+        steps:
+            - run: | 
+                echo "${{(on.email.outputs.subject)}}"
+            - name: 'Email To Todoist'
+              uses: actionsflow/axios@v1
+              id: mail_to_todoist
+              with:
+                url: https://api.todoist.com/rest/v1/tasks
+                method: 'POST'
+                headers: '{ "Authorization": "${{ secrets.BEARER_TODOIST_TOKEN }}", "content-type": "application/json" }'
+                data: '{ "content": "subject: <<<${{(on.email.outputs.subject)}}>>>", "project_id": 2267113664, "section_id": 50833044 }'
+                is_debug: true

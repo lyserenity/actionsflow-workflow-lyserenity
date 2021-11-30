@@ -1,0 +1,25 @@
+on:
+  youtube:
+    channel_id:
+      - UCSs4A6HYKmHA2MG_0z-F0xw
+    # playlist_id:
+    #   - PL99D544ED5B1E58D8
+    #   - PL2qc-hH9Ip-SSUaZd_G8IxtecK0WZ-af-
+
+
+jobs:
+    new_todo_in_todoist:
+        name: 'Make a HTTP Request'
+        runs-on: ubuntu-latest
+        steps:
+            - run: | 
+                echo "${{on.youtube.outputs.title}}: ${{on.youtube.outputs.link}}"
+            - name: 'To Todoist'
+              uses: actionsflow/axios@v1
+              id: new_todo_todoist
+              with:
+                url: https://api.todoist.com/rest/v1/tasks
+                method: 'POST'
+                headers: '{ "Authorization": "<<<${{ secrets.BEARER_TODOIST_TOKEN }}>>>", "content-type": "application/json" }'
+                data: '{ "content": "<<<${{on.youtube.outputs.link}}>>>", "project_id": 2267113664, "section_id": 50833044 }'
+                is_debug: true
