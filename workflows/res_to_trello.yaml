@@ -3,6 +3,7 @@ on:
     url:
       - http://weekly.pychina.org/feeds/all.atom.xml
       - https://realpython.com/atom.xml
+      - https://miguendes.me/rss.xml
 #      - https://www.youtube.com/feeds/videos.xml?channel_id=UCSs4A6HYKmHA2MG_0z-F0xw
     config:
       limit: 15
