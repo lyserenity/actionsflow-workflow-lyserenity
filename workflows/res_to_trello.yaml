@@ -23,8 +23,8 @@ jobs:
           method: POST
           params: |
             {
-              "name": "${{on.rss.outputs.title}}",
-              "urlSource" : "${{on.rss.outputs.link}}",
+              "name": "<<<${{on.rss.outputs.title}}>>>",
+              "urlSource" : "<<<${{on.rss.outputs.link}}>>>",
               "desc" : "<<<${{on.rss.outputs.contentSnippet}}>>>",
               "pos": "top"
             }
