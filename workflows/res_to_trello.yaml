@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: | 
-          echo "${{on.rss.outputs.title}}: ${{on.rss.outputs.link}}"
+          echo "<<<${{on.rss.outputs.title}}>>>: <<<${{on.rss.outputs.link}}>>>"
       - name: Add a new card to Trello Refile List
         uses: actionsflow/axios@v1
         with:
