@@ -8,10 +8,13 @@ jobs:
     steps:
       - name: Print Outputs
         env:
-          method: ${{ on.webhook.outputs }}
+          method: ${{ on.webhook.outputs.method }}
+          body: ${{ toJson(on.webhook.outputs.body) }}
+          headers: ${{ toJson(on.webhook.outputs.headers) }}
         run: |
-          echo $method
-
+          echo method: $method
+          echo headers $headers
+          echo body: $body
       - name: 'Add a new card to Project Database'
         uses: actionsflow/axios@v1
         with:
@@ -19,7 +22,7 @@ jobs:
           method: POST
           body: |
             {
-              "Title": "<<<${{on.outputs.outputs.name}}>>>",
+              "Title": "<<<${{on.webhook.outputs.name}}>>>",
               "Target": "Clockify",
-              "Clockify_ID" : "${{on.outputs.outputs.id}}"
+              "Clockify_ID" : "${{on.webhook.outputs.id}}"
             }
