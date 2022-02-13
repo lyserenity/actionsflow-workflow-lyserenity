@@ -1,0 +1,25 @@
+on:
+  webhook:
+
+jobs:
+  airtable_f8CCf:
+    name: add records to airtable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Outputs
+        env:
+          method: ${{ on.webhook.outputs }}
+        run: |
+          echo $method
+
+      - name: 'Add a new card to Project Database'
+        uses: actionsflow/axios@v1
+        with:
+          url: ${{secrets.AIRTABLE_F8CCF_WEBHOOK}}
+          method: POST
+          body: |
+            {
+              "Title": "<<<${{on.outputs.outputs.name}}>>>",
+              "Target": "Clockify",
+              "Clockify_ID" : "${{on.outputs.outputs.id}}"
+            }
