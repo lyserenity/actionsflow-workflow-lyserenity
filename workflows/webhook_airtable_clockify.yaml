@@ -23,5 +23,8 @@ jobs:
       - name: Print Response
         run: |
           echo OUTPUT: ${{ steps.step1.outputs.data }}
-          echo OUTPUT_1: ${{ steps.step1.outputs.data.records[1] }}
-          echo OUTPUT_2: ${{fromJSON(steps.step1.outputs.data)}}
+          echo OUTPUT_1: ${{ steps.step1.outputs.data.records[0] }}
+
+      - name: Print Response 2
+        run: |
+          echo OUTPUT_2: ${{ steps.step1.outputs.body }}
