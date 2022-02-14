@@ -23,6 +23,7 @@ jobs:
       - name: Print Response
         run: |
           echo OUTPUT: ${{ steps.step1.outputs.data }}
-          echo OUTPUT_1: ${{ steps.step1.outputs.data[0] }}
-          echo OUTPUT_2: ${{ toJSON(steps.step1.outputs.data) }}
-          echo OUTPUT_3: ${{ toJSON(steps.step1.outputs.data).records[0] }}
+          echo OUTPUT_1: ${{ formJSON(steps.step1.outputs.data) }}
+          echo OUTPUT_2: ${{ toJSON(steps.step1.outputs.data).records }}
+          echo OUTPUT_3: ${{ formJSON(steps.step1.outputs.data).records }}
+          echo OUTPUT_4: ${{ toJSON(steps.step1.outputs.data).records[1] }}
