@@ -25,7 +25,7 @@ jobs:
           content-type: application/json
           params: |
            {
-              "filterByFormula": "AND({Title}='${{on.webhook.outputs.body.Title}}',SEARCH('Clockify',{Target}),{Clockify_ID=''})",
+              "filterByFormula": "AND(%7BTitle%7D%3D%27Test%27%2CSEARCH(%27Clockify%27%2C%7BTarget%7D)%2C%7BClockify_ID%3D%27%27%7D)",
               "maxRecords": 1
             }
 
