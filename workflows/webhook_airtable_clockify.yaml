@@ -22,7 +22,6 @@ jobs:
 
       - name: Print Response
         run: |
-          echo STATUS: ${{ steps.step1.outputs.status }}
           echo OUTPUT: ${{ steps.step1.outputs.data }}
-          echo OUTPUT: ${{ steps.step1.outputs.data.records[1] }}
-          echo OUTPUT_2: ${{ steps.step1.outputs }}
+          echo OUTPUT_1: ${{ steps.step1.outputs.data.records[1] }}
+          echo OUTPUT_2: ${{fromJSON(steps.step1.outputs.data)}}
