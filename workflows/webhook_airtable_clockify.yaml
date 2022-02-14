@@ -8,19 +8,15 @@ jobs:
     steps:
       - name: Print Outputs
         env:
-          method: ${{ on.webhook.outputs.method }}
           body: ${{ toJson(on.webhook.outputs.body) }}
-          headers: ${{ toJson(on.webhook.outputs.headers) }}
         run: |
-          echo method: $method
-          echo headers $headers
           echo body: $body
 
       - name: 'Get the record from airtable'
         id: step1
         uses: actionsflow/axios@v1
         with:
-          url: https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}&filterByFormula=
+          url: https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}
           method: GET
           content-type: application/json
           params: |
