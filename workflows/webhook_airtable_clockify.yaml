@@ -15,7 +15,9 @@ jobs:
           echo method: $method
           echo headers $headers
           echo body: $body
+
       - name: 'Get the record from airtable'
+        id: step1
         uses: actionsflow/axios@v1
         with:
           url: https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}
@@ -26,3 +28,7 @@ jobs:
               "filterByFormula": "AND({Title}='${{on.webhook.outputs.body.Title}}',SEARCH('Clockify',{Target}),{Clockify_ID=''})",
               "maxRecords": 1
             }
+
+      - naem: Print Response
+        run: |
+          echo OUTPUT: ${{steps.step1.outputs}}

@@ -17,7 +17,6 @@ jobs:
           echo body: $body
       - name: 'Add a new record to Project Database'
         uses: actionsflow/axios@v1
-        id: step1
         with:
           url: ${{secrets.AIRTABLE_F8CCF_WEBHOOK}}
           method: POST
@@ -27,7 +26,3 @@ jobs:
               "Target": "Clockify",
               "Clockify_ID" : "${{on.webhook.outputs.body.id}}"
             }
-      - naem: Print Response
-        run: |
-          echo OUTPUT: ${{steps.step1.outputs}}
-          echo RES: ${{steps.step1.outputs[1]}}
