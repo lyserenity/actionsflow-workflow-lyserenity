@@ -13,14 +13,15 @@ jobs:
           echo body: $body
 
       - name: 'Get the record from airtable'
-        id: step1
         uses: actionsflow/axios@v1
+        id: step1
         with:
           url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}&filterByFormula=AND(%7BTitle%7D%3D%27Test%27%2CSEARCH(%27Clockify%27%2C%7BTarget%7D)%2C%7BClockify_ID%7D%3D%27%27)"
           method: GET
           content-type: application/json
 
-      - naem: Print Response
+      - name: Print Response
         run: |
+          echo STATUS: ${{ steps.step1.outputs.status }}
           echo OUTPUT: ${{steps.step1.outputs.data}}
           echo OUTPUT_2: ${{fromJSON(steps.api.outputs.data)}}
