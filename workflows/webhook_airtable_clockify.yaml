@@ -24,6 +24,5 @@ jobs:
         run: |
           echo OUTPUT: ${{ steps.step1.outputs.data }}
           echo OUTPUT_1: ${{ steps.step1.outputs.data[0] }}
-          echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data) }}
-          echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0] }}
-          echo OUTPUT_4: ${{ fromJSON(steps.step1.outputs).data }}
+          echo OUTPUT_2: ${{ toJSON(steps.step1.outputs.data) }}
+          echo OUTPUT_3: ${{ toJSON(steps.step1.outputs.data).records[0] }}
