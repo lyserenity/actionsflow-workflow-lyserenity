@@ -2,18 +2,14 @@ on:
   webhook:
 
 jobs:
-  airtable_f8CCf:
-    name: get records from airtable
+  outputs:
+    name: outputs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Get outputs
+        uses: actions/github-script@v2
+        env:
+          OUTPUTS_PATH: ${{ on.webhook.outputs.body.Title }}
         with:
-          node-version: 12
-      - uses: actions/github-script@v6
-        id: set-result
-        with:
-          script: return "Hello!"
-          result-encoding: string
-      - name: Get result
-        run: echo "${{steps.set-result.outputs.result}}"
+          script: |
+            return ${process.env.OUTPUTS_PATH}`)
