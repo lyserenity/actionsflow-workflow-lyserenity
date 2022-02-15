@@ -11,6 +11,8 @@ jobs:
           body: ${{ toJson(on.webhook.outputs.body) }}
         run: |
           echo body: $body
+          echo title: ${{ fromJSON(on.webhook.outputs.body).title }}
+          echo title_2: ${{ on.webhook.outputs.body.title }}
 
       - name: 'Get the record from airtable'
         uses: actionsflow/axios@v1
@@ -26,4 +28,3 @@ jobs:
           echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
           echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
           echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
-          echo OUTPUT_4: ${{ steps.step1.outputs.data.records[0].id }}
