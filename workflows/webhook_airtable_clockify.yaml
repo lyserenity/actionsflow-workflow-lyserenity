@@ -5,37 +5,30 @@ jobs:
   airtable_f8CCf:
     name: get records from airtable
     runs-on: ubuntu-latest
-    using: 'node16'
     steps:
-      - name: Print Outputs
-        env:
-          body: ${{ toJson(on.webhook.outputs.body) }}
+      - name: Display the path
         run: |
-          echo body: $body
-          echo title: ${{ on.webhook.outputs.body.Title }}
+          print('AAAAAAAAA')
+        shell: python
+      # - name: Print Outputs
+      #   env:
+      #     body: ${{ toJson(on.webhook.outputs.body) }}
+      #   run: |
+      #     echo body: $body
+      #     echo title: ${{ on.webhook.outputs.body.Title }}
 
-      - uses: actions/github-script@v6
-        name: Encode String
-        id: set-result
-        with:
-          script: return "Hello! Hi [aaaaaaa]"
-          result-encoding: string
+      # - name: 'Get the record from airtable'
+      #   uses: actionsflow/axios@v1
+      #   id: step1
+      #   with:
+      #     url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}&filterByFormula=AND(%7BTitle%7D%3D%27Test%27%2CSEARCH(%27Clockify%27%2C%7BTarget%7D)%2C%7BClockify_ID%7D%3D%27%27)"
+      #     method: GET
+      #     content-type: application/json
 
-      - name: Get result
-        run: echo "${{steps.set-result.outputs.result}}"
-
-      - name: 'Get the record from airtable'
-        uses: actionsflow/axios@v1
-        id: step1
-        with:
-          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}&filterByFormula=AND(%7BTitle%7D%3D%27Test%27%2CSEARCH(%27Clockify%27%2C%7BTarget%7D)%2C%7BClockify_ID%7D%3D%27%27)"
-          method: GET
-          content-type: application/json
-
-      - name: Print Response
-        run: |
-          echo OUTPUT: ${{ steps.step1.outputs.data }}
-          echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
-          echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
-          echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
-          echo SCRIPT: ${{ steps.script-result.outputs }}
+      # - name: Print Response
+      #   run: |
+      #     echo OUTPUT: ${{ steps.step1.outputs.data }}
+      #     echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
+      #     echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
+      #     echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
+      #     echo SCRIPT: ${{ steps.script-result.outputs }}
