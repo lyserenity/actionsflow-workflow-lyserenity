@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Display the path
-        run: |
-          echo "AAAA"
-        shell: bash
+          run: |
+            import os
+            print(os.environ['PATH'])
+          shell: python
       # - name: Print Outputs
       #   env:
       #     body: ${{ toJson(on.webhook.outputs.body) }}
