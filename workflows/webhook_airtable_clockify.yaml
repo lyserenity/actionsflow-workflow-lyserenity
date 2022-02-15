@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: Display the path
         run: |
-          print('AAAAAAAAA')
-        shell: python
+          echo "AAAA"
+        shell: bash
       # - name: Print Outputs
       #   env:
       #     body: ${{ toJson(on.webhook.outputs.body) }}
