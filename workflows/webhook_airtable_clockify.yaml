@@ -11,16 +11,22 @@ jobs:
           body: ${{ toJson(on.webhook.outputs.body) }}
         run: |
           echo body: $body
-          echo title: ${{ fromJSON(on.webhook.outputs.body).Title }}
-          echo title_2: ${{ on.webhook.outputs.body.Title }}
+          echo title: ${{ on.webhook.outputs.body.Title }}
 
-      - uses: actions/github-script@v6
-        id: set-result
-        with:
-          script: return "Hello! Hi [aaaaaaa]"
-          result-encoding: string
-      - name: Get result
-        run: echo "${{steps.set-result.outputs.result}}"
+      # - uses: actions/github-script@v6
+      #   id: set-result
+      #   with:
+      #     script: return "Hello! Hi [aaaaaaa]"
+      #     result-encoding: string
+      # - name: Get result
+      #   run: echo "${{steps.set-result.outputs.result}}"
+
+      - name: Display the path
+        id: script-result
+        run: |
+          import urllib.parse
+          print(urllib.parse.quote("test AAAA [abd]"))
+        shell: python
 
       - name: 'Get the record from airtable'
         uses: actionsflow/axios@v1
@@ -36,3 +42,4 @@ jobs:
           echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
           echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
           echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
+          echo SCRIPT: ${{ steps.script-result.outputs }}
