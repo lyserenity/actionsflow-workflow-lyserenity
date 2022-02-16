@@ -19,4 +19,4 @@ jobs:
       - name: Get result
         run: |
           echo RES: "${{steps.get-query-encoding.outputs.result}}"
-          echo OUTPUT: "${{steps.get-query-encoding.outputs}}"
+          echo OUTPUT: "${{toJson(steps.get-query-encoding.outputs)}}"
