@@ -18,6 +18,7 @@ jobs:
 
       - name: Get result
         run: |
-          echo RES: "${{steps.get-query-encoding.outputs.result}}"
-          echo OUTPUT: "${{toJson(steps.get-query-encoding.outputs)}}"
-          echo OUTPUT_2: "${{fromJSON(steps.get-query-encoding.outputs).result}}"
+          echo RES: ${{steps.get-query-encoding.outputs.result}}
+          echo OUTPUT: ${{toJson(steps.get-query-encoding.outputs)}}
+          echo OUTPUT_2: ${{fromJSON(steps.get-query-encoding.outputs).result}}
+          echo OUTPUT_3: ${{toJSON(steps.get-query-encoding.outputs).result}}
