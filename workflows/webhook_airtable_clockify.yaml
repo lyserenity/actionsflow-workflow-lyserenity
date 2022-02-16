@@ -12,4 +12,5 @@ jobs:
           OUTPUTS_PATH: ${{ on.webhook.outputs.body.Title }}
         with:
           script: |
-            return `encodeURIComponent(${process.env.OUTPUTS_PATH})`
+            const outputs = encodeURIComponent(`${process.env.OUTPUTS_PATH}`)
+            return outputs
