@@ -18,3 +18,19 @@ jobs:
 
       - name: Get result
         run: echo "${{steps.get-query-encoding.outputs.result}}"
+
+      - name: Get the record from airtable
+        uses: actionsflow/axios@v1
+        id: step1
+        with:
+          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?api_key=${{secrets.AIRTABLE_API_TOKEN}}&filterByFormula=7BTitle%7D%3D%27<<<${{steps.get-query-encoding.outputs.result}}>>>%27"
+          method: GET
+          content-type: application/json
+
+      - name: Print Response
+        run: |
+          echo OUTPUT: ${{ steps.step1.outputs.data }}
+          echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
+          echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
+          echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
+          echo SCRIPT: ${{ steps.script-result.outputs }}
