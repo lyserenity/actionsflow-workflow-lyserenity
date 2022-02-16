@@ -13,7 +13,7 @@ jobs:
           OUTPUTS_PATH: ${{ on.webhook.outputs.body.Title }}
         with:
           script: |
-            const outputs = encodeURIComponent(`${process.env.OUTPUTS_PATH}`);
+            const outputs = "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/Project%20Database?" + "&filterByFormula=" + encodeURIComponent(`${process.env.OUTPUTS_PATH}`);
             return outputs
 
       - name: Get result
