@@ -17,4 +17,6 @@ jobs:
             return outputs
 
       - name: Get result
-        run: echo "${{steps.get-query-encoding.outputs.result}}"
+        run: |
+          echo RES: "${{steps.get-query-encoding.outputs.result}}"
+          echo OUTPUT: "${{steps.get-query-encoding.outputs}}"
