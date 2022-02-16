@@ -25,7 +25,7 @@ jobs:
         env:
           STRING_ENCODE: <<<${{steps.get-query-encoding.outputs.result}}>>>
         with:
-          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/tblhJf55L33Gh79xj?filterByFormula=AND(%7BTitle%7D%3D'Test'%2CSEARCH('Clockify'%2C%7BTarget%7D))"
+          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/tblhJf55L33Gh79xj?filterByFormula=AND(%7BTitle%7D%3D'${{steps.get-query-encoding.outputs.result}}'%2CSEARCH('Clockify'%2C%7BTarget%7D))"
           method: GET
           headers: '{ "Authorization": "Bearer ${{secrets.AIRTABLE_API_TOKEN}}" }'
           content-type: application/json
@@ -36,4 +36,3 @@ jobs:
           echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
           echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
           echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
-          echo SCRIPT: ${{ steps.script-result.outputs }}
