@@ -7,21 +7,21 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test }}
       output2: ${{ steps.step2.outputs.test }}
-      output3: ${{ steps.step2.outputs.outputs }}
+      # output3: ${{ steps.step2.outputs.outputs }}
     steps:
       - id: step1
         run: echo "::set-output name=test::hello"
       - id: step2
         run: echo "::set-output name=test::world"
-      - name: Get outputs
-        uses: actions/github-script@v5
-        id: get-query-encoding
-        env:
-          OUTPUTS_PATH: ${{ on.webhook.outputs.body.Title }}
-        with:
-          script: |
-            const outputs = encodeURIComponent(`${process.env.OUTPUTS_PATH}`)
-            return outputs
+      # - name: Get outputs
+      #   uses: actions/github-script@v5
+      #   id: get-query-encoding
+      #   env:
+      #     OUTPUTS_PATH: ${{ on.webhook.outputs.body.Title }}
+      #   with:
+      #     script: |
+      #       const outputs = encodeURIComponent(`${process.env.OUTPUTS_PATH}`)
+      #       return outputs
 
   airtable_f8CCf:
     name: get records from airtable
@@ -32,16 +32,16 @@ jobs:
       # - name: Get result
       #   run: echo "<<<${{steps.get-query-encoding.outputs.result}}>>>"
 
-      - name: Get the record from airtable
-        uses: actionsflow/axios@v1
-        id: step1
-        # env:
-        #   STRING_ENCODE: <<<${{steps.get-query-encoding.outputs.result}}>>>
-        with:
-          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/tblhJf55L33Gh79xj?filterByFormula=AND(%7BTitle%7D%3D'${{{needs.job1.outputs.output3}}'%2CSEARCH('Clockify'%2C%7BTarget%7D))"
-          method: GET
-          headers: '{ "Authorization": "Bearer ${{secrets.AIRTABLE_API_TOKEN}}" }'
-          content-type: application/json
+      # - name: Get the record from airtable
+      #   uses: actionsflow/axios@v1
+      #   id: step1
+      #   # env:
+      #   #   STRING_ENCODE: <<<${{steps.get-query-encoding.outputs.result}}>>>
+      #   with:
+      #     url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/tblhJf55L33Gh79xj?filterByFormula=AND(%7BTitle%7D%3D'${{{needs.job1.outputs.output3}}'%2CSEARCH('Clockify'%2C%7BTarget%7D))"
+      #     method: GET
+      #     headers: '{ "Authorization": "Bearer ${{secrets.AIRTABLE_API_TOKEN}}" }'
+      #     content-type: application/json
 
       - name: Print Response
         run: |
