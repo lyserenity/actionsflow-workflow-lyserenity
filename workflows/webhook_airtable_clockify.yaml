@@ -2,10 +2,17 @@ on:
   webhook:
 
 jobs:
-  airtable_f8CCf:
-    name: get records from airtable
+  job1:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
+      output3: ${{ steps.step2.outputs.outputs }}
     steps:
+      - id: step1
+        run: echo "::set-output name=test::hello"
+      - id: step2
+        run: echo "::set-output name=test::world"
       - name: Get outputs
         uses: actions/github-script@v5
         id: get-query-encoding
@@ -16,16 +23,22 @@ jobs:
             const outputs = encodeURIComponent(`${process.env.OUTPUTS_PATH}`)
             return outputs
 
+  airtable_f8CCf:
+    name: get records from airtable
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+
       # - name: Get result
       #   run: echo "<<<${{steps.get-query-encoding.outputs.result}}>>>"
 
       - name: Get the record from airtable
         uses: actionsflow/axios@v1
         id: step1
-        env:
-          STRING_ENCODE: <<<${{steps.get-query-encoding.outputs.result}}>>>
+        # env:
+        #   STRING_ENCODE: <<<${{steps.get-query-encoding.outputs.result}}>>>
         with:
-          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/tblhJf55L33Gh79xj?filterByFormula=AND(%7BTitle%7D%3D'${{steps.get-query-encoding.outputs.result}}'%2CSEARCH('Clockify'%2C%7BTarget%7D))"
+          url: "https://api.airtable.com/v0/appzz4hbwcoJzQaF2/tblhJf55L33Gh79xj?filterByFormula=AND(%7BTitle%7D%3D'${{{needs.job1.outputs.output3}}'%2CSEARCH('Clockify'%2C%7BTarget%7D))"
           method: GET
           headers: '{ "Authorization": "Bearer ${{secrets.AIRTABLE_API_TOKEN}}" }'
           content-type: application/json
@@ -36,3 +49,4 @@ jobs:
           echo OUTPUT_1: ${{ fromJSON(steps.step1.outputs.data) }}
           echo OUTPUT_2: ${{ fromJSON(steps.step1.outputs.data).records[0].id }}
           echo OUTPUT_3: ${{ fromJSON(steps.step1.outputs.data).records[0].fields.Title }}
+          echo job1: ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
